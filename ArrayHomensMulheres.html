@@ -1,0 +1,135 @@
+<html>
+
+    <head>
+        <style>
+            body{
+                background-color: rgb(243, 248, 253);
+            }
+
+            #left{
+               
+                float: left;
+                width: 25%
+                
+            }
+            #right{
+                
+                float: right;
+                width: 75%;
+            }
+        </style>
+
+        <script>
+                let indice = 0;
+                let array = [];
+
+                function addIntoArray(){
+
+                    let sexo = document.getElementsByName("sexo");
+                    let selectedSexo;
+                    if(sexo[0].checked){
+                         selectedSexo = "Masculino";
+                    }else{
+                         selectedSexo = "Feminino";
+                    }
+                    
+                    let pessoa = ["\n"+document.getElementById("nome").value,selectedSexo];
+
+                    array[indice] = pessoa;
+                    indice++;
+                    console.log(array);
+                }
+                function listMulheres(){
+                    //console.log(array[0]);
+                    let mulheresSeparado = [];
+                    let contMulheres = 0;
+                    let i;
+                    for(i=0 ;i < array.length;i++){
+                        if(array[i].includes("Feminino")){
+                            mulheresSeparado[contMulheres] = array[i];
+                            contMulheres++;
+                        }
+                            
+                   }
+                   console.log(mulheresSeparado);
+                   document.getElementById("lista").value = mulheresSeparado;
+                   
+                   // if( == "Feminino")
+                            //document.getElementById("lista").value = array[0] +"\n"+ array[1];
+                            //document.getElementById("lista").value = array;
+                            //document.getElementById("lista").innerHTML = array[i];
+
+                    //for(i=0 ;i < array.length;i++){
+                        //if( == "Feminino")
+                            // document.getElementById("lista").value = array[0] +"\n"+ array[1];
+                            //document.getElementById("lista").value = array;
+                   //}                    
+
+                    
+                }
+
+                function ListHomens(){
+                    let homemSeparado = [];
+                    let contHomens = 0;
+                    let i;
+                    for(i=0 ;i < array.length;i++){
+                        if(array[i].includes("Masculino")){
+                            homemSeparado[contHomens] = array[i];
+                            contHomens++;
+                        }
+                            
+                   }
+                   document.getElementById("lista").value = homemSeparado;
+                 
+                }
+
+                function listPorSexo(sexoSelecionado){
+                    let arraySeparar = [];
+                    let contadorAuxiliar = 0;
+                    //let i;
+                    for(let i=0 ;i < array.length;i++){
+                        if(array[i].includes(sexoSelecionado)){
+                            arraySeparar[contadorAuxiliar] = array[i];
+                            contadorAuxiliar++;
+                        }
+                            
+                   }
+                   document.getElementById("lista").value = arraySeparar;
+                }
+
+        </script>
+
+    </head>
+
+
+    <body>
+        <div id="left">
+            <h4>Nome:</h4>
+            <input type="text" id="nome">
+        </div>
+
+        <div id="right">
+            <h4>Sexo</h4>
+            <input type="radio" name="sexo" id="masc">
+            <label for="masc">Masculino</label>
+            <input type="radio" name="sexo" id="fem">
+            <label for="fem">Feminino</label>
+
+            <button id="addButton" onclick="addIntoArray()">Adicionar</button>
+           <!-- <button id="addButton" onclick="listMulheres()">Listar Mulheres</button>-->
+            <button id="addButton" onclick="listPorSexo('Feminino')">Listar Mulheres</button>
+            <button id="addButton" onclick="listPorSexo('Masculino')">Listar Homens</button>
+        </div>
+
+        <div id="divLista">
+            
+                <textarea name="lista" id="lista" cols="120" rows="40"></textarea>               
+            
+           <!-- <iframe id="lista" height="400" width="850"></iframe> -->
+
+        </div>
+
+    </body>
+
+
+</html>

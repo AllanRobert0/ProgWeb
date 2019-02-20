@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <style>
+        #TelaCalculo{
+            margin: auto;
+            width: 25%;
+            background-color: rgb(169, 192, 226)
+        }
+        div {
+            text-align: center;
+        }        
+    </style>
+
+    <script>
+        function calcular(){
+
+            let n1 = parseFloat(document.getElementById("n1").value);
+            let n2 = parseFloat(document.getElementById("n2").value);
+            let n3 = parseFloat(document.getElementById("n3").value);
+            
+            let total = (n1+n2+n3)/3;
+
+            if(total >= 7){
+                window.alert("Aprovado! ");
+            }else if(total >= 5){
+                window.alert("Recuperação! ");
+            }else{
+                window.alert("Reprovado! ");
+            }
+
+        }
+    </script>
+
+</head>
+
+
+
+<body>
+    <div id="TelaCalculo">
+        <div>
+            <div>
+                Nota 1
+            </div>
+
+            <input type="number" id="n1">
+        </div>
+
+        <div>
+            <div>
+                Nota 2
+            </div>
+
+            <input type="number" id="n2">
+        </div>
+
+        <div>
+            <div >
+                Nota 3
+            </div>
+
+            <input type="number" id="n3">
+        </div>
+
+        <div>
+            <button type="button" id="CalcBtn" onclick="calcular()">Calcular</button>
+        </div>
+        
+    </div>
+
+</body>
+
+</html>
