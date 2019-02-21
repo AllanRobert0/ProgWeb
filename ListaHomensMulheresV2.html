@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #879E9A;
+        }
+        
+        #left {
+            float: left;
+            width: 25%
+        }
+        
+        #right {
+            float: right;
+            width: 75%;
+        }
+    </style>
+
+    <script>
+        //let indice = 0;
+        let array = [];
+
+        function addIntoArray() {
+
+            let sexo = document.getElementsByName("sexo");
+            let selectedSexo;
+            if (sexo[0].checked) {
+                selectedSexo = "Masculino";
+            } else if (sexo[1].checked) {
+                selectedSexo = "Feminino";
+            } else{
+                window.alert("Sexo não Selecionado!");
+            }
+
+            let pessoa = {nome: document.getElementById("nome").value,sexo: selectedSexo, idade: parseInt(document.getElementById("idade").value)};
+            
+            array.push(pessoa);
+            console.log(pessoa.nome);
+        }
+
+
+        function listPorSexo(sexoSelecionado) {
+            let arraySeparar = [];
+            let contadorAuxiliar = 0;
+            for (let i = 0; i < array.length; i++) {
+
+                if (array[i].sexo == sexoSelecionado) {
+                    arraySeparar[contadorAuxiliar] = "\nNome: " + array[i].nome ;
+                    contadorAuxiliar++;
+                }
+
+            }
+            document.getElementById("lista").value = arraySeparar;
+        }
+
+       function listPorIdade(idade1,idade2){
+
+            let arraySeparar = []; 
+            let contadorAuxiliar = 0; 
+
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].idade > idade1 && array[i].idade < idade2  ){
+                    arraySeparar[contadorAuxiliar] = "\n\nNome: " + array[i].nome +"\nSexo: " + array[i].sexo;
+                    contadorAuxiliar++; 
+                }
+            } 
+            document.getElementById("lista").value = arraySeparar;
+        }
+    </script>
+
+</head>
+
+
+<body>
+    <div id="left">
+        <h4>Nome:</h4>
+        <input type="text" id="nome">
+        <h4>Idade:</h4>
+        <input type="text" id="idade">
+    </div>
+    <div id="right">
+        <h4>Sexo</h4>
+        <input type="radio" name="sexo" id="masc">
+        <label for="masc">Masculino</label>
+        <input type="radio" name="sexo" id="fem">
+        <label for="fem">Feminino</label>
+
+        <button id="addButton" onclick="addIntoArray()">Adicionar</button>
+        <button id="addButton" onclick="listPorSexo('Feminino')">Listar Mulheres</button>
+        <button id="addButton" onclick="listPorSexo('Masculino')">Listar Homens</button>
+        <button id="addButton" onclick="listPorIdade('0','14')">Listar Crianças</button>
+        <button id="addButton" onclick="listPorIdade('15','21')">Listar Adolescentes</button>
+        <button id="addButton" onclick="listPorIdade('22','63')">Listar Adultos</button>
+        <button id="addButton" onclick="listPorIdade('64','200')">Listar Idosos</button>
+    </div>
+
+    <div id="divLista">
+       <textarea name="lista" id="lista" cols="120" rows="20"></textarea>  
+        <!--> <iframe frameborder="0" id="lista"></iframe>  </!-->
+    </div>
+</body>
+
+</html>
