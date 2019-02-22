@@ -26,6 +26,7 @@
             }
 
             function imprimirPares(){
+                document.getElementById("listaPares").innerHTML = " ";
                 for(let i = 0; i < arrayNumeros.length;i++){
                     if(arrayNumeros[i] % 2 == 0){
                         document.getElementById("listaPares").innerHTML+= arrayNumeros[i] + ",  ";
@@ -33,7 +34,8 @@
                 }
             }
 
-            function imprimirImpares(){
+            function imprimirImpares(){                
+                document.getElementById("listaImpares").innerHTML = " ";
                 for(let i = 0; i < arrayNumeros.length;i++){
                     if(arrayNumeros[i] % 2 != 0){
                         document.getElementById("listaImpares").innerHTML+= arrayNumeros[i] + ",  ";
