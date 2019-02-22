@@ -19,28 +19,53 @@
         <script>
             
             arrayNumeros = [];
+            let ativaVirgula = false;
 
             function addVetor(){
+                
+               if(arrayNumeros.length != 0){
+                    document.getElementById("listaTodosNumeros").innerHTML+=  ",  ";
+                }
+
                 arrayNumeros.push(parseInt(document.getElementById("numero").value));                
-                document.getElementById("listaTodosNumeros").innerHTML+= parseInt(document.getElementById("numero").value) + ",  ";              
+
+                document.getElementById("listaTodosNumeros").innerHTML+= parseInt(document.getElementById("numero").value) ;
+
+                document.getElementById("numero").value =  "";            
             }
 
             function imprimirPares(){
+
                 document.getElementById("listaPares").innerHTML = " ";
                 for(let i = 0; i < arrayNumeros.length;i++){
+
+                    
                     if(arrayNumeros[i] % 2 == 0){
-                        document.getElementById("listaPares").innerHTML+= arrayNumeros[i] + ",  ";
+                        if(ativaVirgula){
+
+                            document.getElementById("listaPares").innerHTML+= ", ";
+                         }
+                        document.getElementById("listaPares").innerHTML+= arrayNumeros[i];
+                        ativaVirgula = true;
+
                     }
                 }
+                ativaVirgula = false;
             }
 
-            function imprimirImpares(){                
+            function imprimirImpares(){
                 document.getElementById("listaImpares").innerHTML = " ";
                 for(let i = 0; i < arrayNumeros.length;i++){
+                    
                     if(arrayNumeros[i] % 2 != 0){
-                        document.getElementById("listaImpares").innerHTML+= arrayNumeros[i] + ",  ";
-                    }
+                        if(ativaVirgula){
+                            document.getElementById("listaImpares").innerHTML+= ", ";
+                         }
+                        document.getElementById("listaImpares").innerHTML+= arrayNumeros[i];
+                        ativaVirgula = true;
+                    }                    
                 }
+                ativaVirgula = false;
             }
         
         </script>
