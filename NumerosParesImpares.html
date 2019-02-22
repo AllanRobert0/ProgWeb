@@ -1,0 +1,80 @@
+<html>
+
+    <head>
+        <style>
+            body{
+                text-align: center;
+            }
+            .left {
+                float: left;
+                width: 50%
+            }
+        
+            .right {
+                float: right;
+                width: 50%;
+            }
+        </style>
+
+        <script>
+            
+            arrayNumeros = [];
+
+            function addVetor(){
+                arrayNumeros.push(parseInt(document.getElementById("numero").value));                
+                document.getElementById("listaTodosNumeros").innerHTML+= parseInt(document.getElementById("numero").value) + ",  ";              
+            }
+
+            function imprimirPares(){
+                for(let i = 0; i < arrayNumeros.length;i++){
+                    if(arrayNumeros[i] % 2 == 0){
+                        document.getElementById("listaPares").innerHTML+= arrayNumeros[i] + ",  ";
+                    }
+                }
+            }
+
+            function imprimirImpares(){
+                for(let i = 0; i < arrayNumeros.length;i++){
+                    if(arrayNumeros[i] % 2 != 0){
+                        document.getElementById("listaImpares").innerHTML+= arrayNumeros[i] + ",  ";
+                    }
+                }
+            }
+        
+        </script>
+
+
+    </head>
+
+    <body>
+
+        <div>
+            <h1>Pares / Ímpares</h1>
+        </div>
+        
+        <div>
+            <input type="number" id="numero">
+            <button id="btnAdd" onclick="addVetor()">Adicionar</button>
+        </div>
+
+        <div id="listaTodosNumeros">
+            
+        </div>
+        
+
+        <div class="left">
+            <button id="btnImprimePares" onclick="imprimirPares()">Imprimir Pares</button>
+        </div>
+
+        <div class="right">
+            <button id="btnImprimePares" onclick="imprimirImpares()">Imprimir Ímpares</button>
+        </div>
+
+        <div id="listaPares" class="left">
+        </div>
+
+        <div id="listaImpares" class="right">
+        </div>
+    </body>
+
+</html>
