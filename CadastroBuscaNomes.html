@@ -1,0 +1,73 @@
+<html>
+
+    <head>
+        <style>
+            body{
+                text-align: center;
+            }
+            .left {
+                float: left;
+                width: 50%
+            }
+        
+            .right {
+                float: right;
+                width: 50%;
+            }
+        </style>
+
+        <script>
+            
+            arrayNomes = [];
+
+            function Adicionar(){
+                arrayNomes.push(document.getElementById("nomeAdicionar").value);
+            }
+            function Buscar(){
+
+                let ativaVirgula = false;
+                document.getElementById("listaNomes").innerHTML = "";
+                for(let i = 0; i < arrayNomes.length; i++){
+                   if(arrayNomes[i].indexOf( document.getElementById("nomeBuscar").value  ) != -1){
+
+                       if(ativaVirgula){
+                        document.getElementById("listaNomes").innerHTML += ", ";
+                       } 
+                       document.getElementById("listaNomes").innerHTML += arrayNomes[i];
+                       ativaVirgula = true;
+                   }
+                }
+            }
+
+        </script>
+    </head>
+
+    <body>
+        
+        <h1>Cadastro</h1>
+
+        <div class="left">
+                <input type="text" id="nomeAdicionar">
+        </div>
+
+        <div class="right">
+                <button id="btnAdicionar" onclick="Adicionar()">Adicionar</button>
+        </div>
+
+        <h1>Busca por Nome</h1>
+
+        <div class="left">
+                <input type="text" id="nomeBuscar">
+        </div>
+
+        <div class="right">
+                <button id="btnBuscar" onclick="Buscar()">Buscar</button>
+        </div>
+
+        <div id="listaNomes">
+
+        </div>
+        
+    </body>
+
+</html>
