@@ -1,0 +1,113 @@
+<html>
+
+    <head>
+        <style>
+        body{
+            text-align: center;
+        }
+         #left {
+            float: left;
+            width: 50%
+        }
+        
+        #right {
+            float: right;
+            width: 50%;
+        }           
+        </style>
+
+        <script>
+
+            function Calcular(){
+
+                let jurosPorMes = parseFloat(document.getElementById("numJuros").value).toFixed(2);
+                let numMultaPorAtraso = parseFloat(document.getElementById("numMultaAtraso").value).toFixed(2);                           
+                let numValorParcela = parseFloat(document.getElementById("numValorParcela").value).toFixed(2); 
+                
+                let dataAtual = new Date(document.getElementById("dataAtual").value);
+                let anoAtual = dataAtual.getFullYear();
+                let diaAtual = dataAtual.getDate();
+                let mesAtual = dataAtual.getMonth();
+                
+                let dataVencimento = new Date(document.getElementById("dataVencimento").value);
+                let anoVencimento = dataVencimento.getFullYear();
+                let diaVencimento = dataVencimento.getDate();
+                let mesVencimento = dataVencimento.getMonth();
+
+                let diasAtraso = ((dataAtual - dataVencimento)/86400000).toFixed(2); //Fórmula: divida o valor de tempo(ms) por 8,64e+7
+
+                let totaljuros =(  (((jurosPorMes/30)/100)*numValorParcela) * diasAtraso).toFixed(2);
+                let totalMultaPorAtraso = ((numMultaPorAtraso/100)*numValorParcela).toFixed(2);
+                let totalPagar = ( parseFloat(totaljuros)  +  parseFloat(totalMultaPorAtraso) + parseFloat(numValorParcela));
+
+                document.getElementById("totalMulta").innerHTML = totalMultaPorAtraso;                
+                document.getElementById("diasAtraso").innerHTML = diasAtraso;
+                document.getElementById("totalJuros").innerHTML = totaljuros;
+                document.getElementById("totalPagar").innerHTML = totalPagar;
+
+               
+
+            }
+
+        </script>
+
+    </head>
+
+
+    <body>
+        <h1>Calcula Parcela</h1>
+        <div id="left">
+            <div>
+                <h3>Juros Por Mês (%)</h3>
+                <input type="number" id="numJuros">
+            </div>
+
+            <div>
+                <h3>Multa Por Atraso (%)</h3>
+                <input type="number" id="numMultaAtraso">
+            </div>
+
+            <div>
+                <h3>Data Atual</h3>
+                <input type="date" id="dataAtual">
+            </div>
+
+            <div>
+                <h3>Valor da Parcela (R$)</h3>
+                <input type="number" id="numValorParcela">
+            </div>
+
+            <div>
+                <h3>Data de Vencimento</h3>
+                <input type="date" id="dataVencimento">
+            </div>
+        </div>
+
+        <div id="right">
+            <div>
+                <h3>Multa (R$)</h3>
+                <div id="totalMulta">-</div>
+            </div>
+
+            <div>
+                <h3>Dias de Atraso</h3>
+                <div id="diasAtraso">-</div>
+            </div>
+
+            <div>
+                <h3>Juros (R$)</h3>
+                <div id="totalJuros">-</div>
+            </div>
+
+            <div>
+                <h3>Total (R$)</h3>
+                <div id="totalPagar">-</div>
+            </div> 
+
+         </div>           
+         
+            <button onclick="Calcular()">Calcular</button>
+        
+    </body>
+
+</html>
