@@ -1,0 +1,190 @@
+<html>
+
+    <head>
+
+        <style>
+
+            .Itemlinha {
+                display: inline-block;
+                width: 180px;
+                height: 50px;
+                padding: 5px;
+
+                border: 2px solid;
+            }
+
+            .main-Inputs{
+                margin-bottom: 10px;                
+                margin-top: 10px;
+
+               
+                border: 10px;
+            }
+
+        </style>
+
+        <script>
+
+            let contLinha = -1;
+            let numItemLinha = -1;
+
+            const linha = () =>{
+                contLinha++;
+                return(`<div class="Linha" id=linha${contLinha}> </div>`);
+            }
+
+            const Itemlinha = (numItemLinha) =>{
+                return(`<div class='Itemlinha' id='Itemlinha${numItemLinha}'> </Itemlinha>`);
+            }
+
+            const divTexto = (texto) =>{
+                return(`<div>${texto}</div>`);
+            }
+
+            const divInputValorParcela = (contLinha) =>{
+                return(`<div><input type='number' id='numValorParcela${contLinha}'></div>`);
+            }
+
+            const divInputData = (contLinha) =>{
+                return(`<div><input type='date' id='dataVencimento${contLinha}'></div>`);
+            }
+
+            const divResultadoMulta = (contLinha) =>{
+                return(`<div><div class='totalMulta' id='totalMulta${contLinha}'>-</div></div>`);
+            }
+
+            const divResultadoDiasAtraso = (contLinha) =>{
+                return(`<div><div id="diasAtraso">-</div></div> `);
+            }
+
+            const divResultadoJuros = (contLinha) =>{
+                return(`<div>
+                                <div id="totalJuros${contLinha}">-</div>
+                        </div>`);
+            }
+
+            const divResultadoTotal = (contLinha) =>{
+                return(`<div>
+                                <div id="totalPagar${contLinha}">-</div>
+                        </div> `);
+            }
+
+
+
+            function AdicionarLinha(){//cria uma linha
+                
+                numItemLinha++;//+1 antes de criar item
+
+                //cria a linha, acrescenta +1 linha ao contador
+                document.getElementById("container-linhas").innerHTML += linha();
+
+                document.getElementById(`linha${contLinha}`).innerHTML = Itemlinha(numItemLinha);
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML = divTexto('Valor da Parcela (R$)');
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML += divInputValorParcela(contLinha);
+                
+
+                numItemLinha++;//+1 antes de criar proximo item
+
+                document.getElementById(`linha${contLinha}`).innerHTML += Itemlinha(numItemLinha);
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML = divTexto('Data de Vencimento');
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML += divInputData(contLinha);
+                
+                numItemLinha++;//+1 antes de criar item
+
+                document.getElementById(`linha${contLinha}`).innerHTML += Itemlinha(numItemLinha);
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML = divTexto('Multa (R$)');                
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML += divResultadoMulta(contLinha);
+
+                numItemLinha++;//+1 antes de criar item
+
+                document.getElementById(`linha${contLinha}`).innerHTML += Itemlinha(numItemLinha);
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML = divTexto('Dias de Atraso');
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML += divResultadoDiasAtraso(contLinha);
+
+                numItemLinha++;//+1 antes de criar item
+
+                document.getElementById(`linha${contLinha}`).innerHTML += Itemlinha(numItemLinha);
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML = divTexto('Juros (R$)');
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML += divResultadoJuros(contLinha);
+
+                numItemLinha++;//+1 antes de criar item
+
+                document.getElementById(`linha${contLinha}`).innerHTML += Itemlinha(numItemLinha);
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML = divTexto('Total (R$)');
+                document.getElementById(`Itemlinha${numItemLinha}`).innerHTML += divResultadoTotal(contLinha);
+
+            }
+
+            function Calcular(){
+
+                let jurosPorMes = parseFloat(document.getElementById("numJuros").value).toFixed(2);
+                let numMultaPorAtraso = parseFloat(document.getElementById("numMultaAtraso").value).toFixed(2);                           
+                let numValorParcela = parseFloat(document.getElementById("numValorParcela").value).toFixed(2); 
+
+                let dataAtual = new Date(document.getElementById("dataAtual").value);
+                let anoAtual = dataAtual.getFullYear();
+                let diaAtual = dataAtual.getDate();
+                let mesAtual = dataAtual.getMonth();
+
+                let dataVencimento = new Date(document.getElementById("dataVencimento").value);
+                let anoVencimento = dataVencimento.getFullYear();
+                let diaVencimento = dataVencimento.getDate();
+                let mesVencimento = dataVencimento.getMonth();
+
+                let diasAtraso = ((dataAtual - dataVencimento)/86400000).toFixed(2); //Fórmula: divida o valor de tempo(ms) por 8,64e+7
+
+                let totaljuros =(  (((jurosPorMes/30)/100)*numValorParcela) * diasAtraso).toFixed(2);
+                let totalMultaPorAtraso = ((numMultaPorAtraso/100)*numValorParcela).toFixed(2);
+                let totalPagar = ( parseFloat(totaljuros)  +  parseFloat(totalMultaPorAtraso) + parseFloat(numValorParcela));
+
+                document.getElementById("totalMulta").innerHTML = totalMultaPorAtraso;                
+                document.getElementById("diasAtraso").innerHTML = diasAtraso;
+                document.getElementById("totalJuros").innerHTML = totaljuros;
+                document.getElementById("totalPagar").innerHTML = totalPagar;
+
+            }
+
+
+  
+            
+
+        </script>
+
+    </head>
+
+    <body>
+       <h1>Calculadora de Parcelas</h1>
+
+
+       <div>
+           <div class="main-Inputs">
+                Juros Por Mês (%)
+                <input type="number" id="numJuros">  
+            </div> 
+
+            <div class="mainInputs">
+                Multa Por Atraso (%)
+                <input type="number" id="numMultaAtraso">  
+            </div>  
+
+            <div class="mainInputs">
+                Data Atual
+                <input type="date" id="dataAtual">
+            </div>
+        </div>
+
+
+
+        <div id="container-linhas">
+
+
+
+
+        </div>
+
+        
+       <button onclick="AdicionarLinha()">Adicionar Linha</button>
+       <button onclick="Calcular()">Calcular</button>
+    </body>
+
+</html>
