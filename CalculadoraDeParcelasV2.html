@@ -7,7 +7,7 @@
 
        <div>
            <div class="main-Inputs">
-                Juros Por Mês (%)
+                Juros Por Mes (%)
                 <input type="number" id="numJuros">  
             </div> 
 
@@ -28,10 +28,28 @@
 
         </div>
 
-        
+        <div id="kk">        
+            <div class="somasTotais" id="somaMultas">
+                Total Multas: -
+            </div>
+
+            <div class="somasTotais" id="somaDias">
+                Total Dias de Atraso: -
+            </div>
+
+            <div class="somasTotais" id="somaJuros">
+                Total Juros: -
+            </div>
+
+            <div class="somasTotais" id="somaTotais">
+                Total a Pagar: -
+            </div>
+        </div>
+
        <button onclick="AdicionarLinha()">Adicionar Linha</button>
        <button onclick="Calcular()">Calcular</button>
        <button onclick="TESTE()">TESTE</button>
+       
 
 
     </body>
@@ -39,31 +57,28 @@
     <head>
 
         <style>
-
             .Itemlinha {
                 display: inline-block;
                 width: 180px;
                 height: 50px;
                 padding: 5px;
-
                 border: 2px solid;
             }
-
             .main-Inputs{
                 margin-bottom: 10px;                
                 margin-top: 10px;
-
                
                 border: 10px;
             }
-
+            .somasTotais{
+                display: inline-block;
+               margin-left: 70px; 
+            }
         </style>
 
         <script>
-
             let contLinha = -1;
             let i = 0;
-
             const linha = () =>{
                 
                 return(`
@@ -105,36 +120,43 @@
                             <div class="totalPagar">-</div>
                         </div>
                     </div>
-                
+                    <button onclick="Remover(this)">REMOVER</button>
                 `);
             }
 
+            function Remover(botao){
+                //console.log(typeof botao);
+                //console.log(botao);
+                //botao.remove();
+
+               console.log(botao.parentNode);
+               botao.parentNode.remove();
+            }
 
 
             function AdicionarLinha(){                
-
                 let novaLinha = document.createElement("div");
                 novaLinha.className = "linha";
                 novaLinha.innerHTML = linha();
                 document.getElementById("container-linhas").appendChild(novaLinha);
                 contLinha++;
             }
-
             function Calcular(){
-
+                let somaMulta = 0;
+                let somaDias  = 0;
+                let somaJuros = 0;
+                let somaTotal = 0;
                 
                 let jurosPorMes = parseFloat(document.getElementById("numJuros").value).toFixed(2);
                 let numMultaPorAtraso = parseFloat(document.getElementById("numMultaAtraso").value).toFixed(2);
                 let dataAtual = new Date(document.getElementById("dataAtual").value);
-
                 let numValorParcela = document.getElementsByClassName("numValorParcela");
                 let dataVencimento = document.getElementsByClassName("dataVencimento");
+                
+                for(i=0 ; i <= contLinha; i++){
 
-                for(i ; i <= contLinha; i++){
-                    //FALTA
-                    let diasAtraso = 10;//((dataAtual - dataVencimento[i])/86400000).toFixed(2); //Fórmula: divida o valor de tempo(ms) por 8,64e+7
-
-                    let totaljuros =(  (((jurosPorMes/30)/100)*numValorParcela[i].value) * diasAtraso).toFixed(2);
+                    let diasAtraso = ((dataAtual - dataVencimento[i].valueAsDate)/86400000).toFixed(2); //Fórmula: divida o valor de tempo(ms) por 8,64e+7
+                    let totaljuros =(  (((jurosPorMes/30)/100)*numValorParcela[i].value) * diasAtraso).toFixed(2);//j por mes acrescentado por dia
                     let totalMultaPorAtraso = ((numMultaPorAtraso/100)*numValorParcela[i].value).toFixed(2);
                     let totalPagar = ( parseFloat(totaljuros)  +  parseFloat(totalMultaPorAtraso) + parseFloat(numValorParcela[i].value));
 
@@ -142,12 +164,21 @@
                     document.getElementsByClassName("diasAtraso")[i].innerHTML = diasAtraso;
                     document.getElementsByClassName("totalJuros")[i].innerHTML = totaljuros;
                     document.getElementsByClassName("totalPagar")[i].innerHTML = totalPagar;
-                }
-               
 
+                    
+                    somaDias  += parseFloat(diasAtraso) ;
+                    somaMulta += parseFloat(totalMultaPorAtraso);
+                    somaJuros += parseFloat(totaljuros);
+                    somaTotal += parseFloat(totalPagar);
+                }
+
+                document.getElementById("somaMultas").innerHTML = "Total Multas: "+somaMulta;
+                document.getElementById("somaDias").innerHTML = "Total Dias de Atraso: "+somaDias;
+                document.getElementById("somaJuros").innerHTML = "Total Juros: "+somaJuros;
+                document.getElementById("somaTotais").innerHTML = "Total a Pagar: "+somaTotal;
+               
             }
             AdicionarLinha();
-
         </script>
 
     </head>
